@@ -82,22 +82,30 @@ const Home = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div>
-        <h1>Dynamic HTML Page</h1>
-        <div style={{ display: "flex", gap: "10px" }}>
-          <DraggableItem type="image">📷 Drag Image</DraggableItem>
-          <DraggableItem type="title">🖋️ Drag Title</DraggableItem>
-          <DraggableItem type="paragraph">📄 Drag Paragraph</DraggableItem>
+        <div className="flex justify-between px-4 pt-4">
+          <div className="flex gap-5">
+            <DraggableItem type="image">📷 Drag Image</DraggableItem>
+            <DraggableItem type="title">🖋️ Drag Title</DraggableItem>
+            <DraggableItem type="paragraph">📄 Drag Paragraph</DraggableItem>
+          </div>
+          <div>
+            <button
+              onClick={exportHTML}
+              className="px-2 py-1 font-semibold rounded-md bg-gray-800 text-gray-100"
+            >
+              📤 Export as HTML
+            </button>
+          </div>
         </div>
         <DroppableArea
           accept={["image", "title", "paragraph"]}
           onDrop={handleDrop}
         >
           <div
+            className="min-h-screen"
             ref={exportRef}
             style={{
               position: "relative",
-              minHeight: "600px",
-              border: "1px solid #ccc",
               padding: "10px",
             }}
           >
@@ -113,9 +121,6 @@ const Home = () => {
             ))}
           </div>
         </DroppableArea>
-        <button onClick={exportHTML} style={{ marginTop: "20px" }}>
-          Export as HTML
-        </button>
       </div>
     </DndProvider>
   );

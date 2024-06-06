@@ -9,7 +9,11 @@ const DraggableItem = ({ type, children }) => {
   });
 
   return (
-    <div ref={dragRef} style={{ cursor: "move" }}>
+    <div
+      className="px-2 py-1 font-semibold rounded-md bg-gray-800 text-gray-100"
+      ref={dragRef}
+      style={{ cursor: "move" }}
+    >
       {children}
     </div>
   );

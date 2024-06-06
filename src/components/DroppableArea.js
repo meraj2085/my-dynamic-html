@@ -9,7 +9,11 @@ const DroppableArea = ({ accept, onDrop, children }) => {
   });
 
   return (
-    <div ref={dropRef} style={{ minHeight: "200px", border: "1px solid #ccc" }}>
+    <div
+      ref={dropRef}
+      style={{ minHeight: "200px", border: "2px solid gray" }}
+      className="m-4 rounded-md"
+    >
       {children}
     </div>
   );
