@@ -1,5 +1,5 @@
 // components/ResizableDraggableItem.js
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Rnd } from "react-rnd";
 
 const ResizableDraggableItem = ({
@@ -9,6 +9,15 @@ const ResizableDraggableItem = ({
   onChange,
   onImageUpload,
 }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.innerHTML = content;
+    }
+  }, [content]);
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -26,17 +35,24 @@ const ResizableDraggableItem = ({
     document.getElementById(`file-input-${id}`).click();
   };
 
+  const handleBlur = () => {
+    setIsEditing(false);
+    if (contentRef.current) {
+      onChange(id, contentRef.current.innerHTML);
+    }
+  };
+
   return (
     <Rnd
       default={{
         x: 0,
         y: 0,
         width: 320,
-        height: 200,
+        height: type === "paragraph" ? 200 : 50,
       }}
       bounds="parent"
       style={{
-        border: "1px solid #ccc",
+        border: "none",
         padding: "10px",
         cursor: "move",
         background: "#fff",
@@ -62,21 +78,39 @@ const ResizableDraggableItem = ({
         </div>
       )}
       {type === "title" && (
-        <input
-          type="text"
-          placeholder="Enter title"
-          value={content}
-          onChange={(e) => onChange(id, e.target.value)}
-          style={{ width: "100%", padding: "10px" }}
-        />
+        <div
+          ref={contentRef}
+          contentEditable={isEditing}
+          onClick={() => setIsEditing(true)}
+          onBlur={handleBlur}
+          style={{
+            cursor: "text",
+            padding: "10px",
+            fontWeight: "bold",
+            minHeight: "30px",
+            outline: "none",
+            border: isEditing ? "1px solid #ccc" : "none",
+          }}
+        >
+          {content}
+        </div>
       )}
       {type === "paragraph" && (
-        <textarea
-          placeholder="Enter paragraph"
-          value={content}
-          onChange={(e) => onChange(id, e.target.value)}
-          style={{ width: "100%", padding: "10px", height: "100px" }}
-        />
+        <div
+          ref={contentRef}
+          contentEditable={isEditing}
+          onClick={() => setIsEditing(true)}
+          onBlur={handleBlur}
+          style={{
+            cursor: "text",
+            padding: "10px",
+            minHeight: "50px",
+            outline: "none",
+            border: isEditing ? "1px solid #ccc" : "none",
+          }}
+        >
+          {content}
+        </div>
       )}
     </Rnd>
   );

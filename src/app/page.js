@@ -38,22 +38,21 @@ const Home = () => {
         body {
           font-family: Arial, sans-serif;
         }
-        input, textarea {
+        div[contenteditable="true"] {
           width: 100%;
           padding: 10px;
           margin-top: 10px;
-        }
-        input {
-          height: 40px;
-        }
-        textarea {
-          height: 100px;
+          outline: none;
         }
         .resizable-draggable-item {
-          border: 1px solid #ccc;
           padding: 10px;
           cursor: move;
           background: #fff;
+          border: none;
+        }
+        .resizable-draggable-item img {
+          max-width: 100%;
+          height: auto;
         }
       </style>
     `;
