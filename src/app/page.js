@@ -5,6 +5,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import DraggableItem from "../components/DraggableItem";
 import DroppableArea from "../components/DroppableArea";
+import ImageUpload from "../components/ImageUpload";
 import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
@@ -21,6 +22,12 @@ const Home = () => {
   const handleChange = (id, content) => {
     setElements((prevElements) =>
       prevElements.map((el) => (el.id === id ? { ...el, content } : el))
+    );
+  };
+
+  const handleImageUpload = (id, image) => {
+    setElements((prevElements) =>
+      prevElements.map((el) => (el.id === id ? { ...el, content: image } : el))
     );
   };
 
@@ -84,12 +91,7 @@ const Home = () => {
             {elements.map((el) => (
               <div key={el.id} style={{ margin: "10px 0" }}>
                 {el.type === "image" && (
-                  <input
-                    type="text"
-                    placeholder="Enter image URL"
-                    value={el.content}
-                    onChange={(e) => handleChange(el.id, e.target.value)}
-                  />
+                  <ImageUpload id={el.id} onImageUpload={handleImageUpload} />
                 )}
                 {el.type === "title" && (
                   <input
