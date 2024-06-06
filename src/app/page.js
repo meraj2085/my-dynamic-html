@@ -5,7 +5,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import DraggableItem from "../components/DraggableItem";
 import DroppableArea from "../components/DroppableArea";
-import ImageUpload from "../components/ImageUpload";
+import ResizableDraggableItem from "../components/ResizableDraggableItem";
 import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
@@ -49,6 +49,12 @@ const Home = () => {
         textarea {
           height: 100px;
         }
+        .resizable-draggable-item {
+          border: 1px solid #ccc;
+          padding: 10px;
+          cursor: move;
+          background: #fff;
+        }
       </style>
     `;
     const completeHTML = `
@@ -87,28 +93,24 @@ const Home = () => {
           accept={["image", "title", "paragraph"]}
           onDrop={handleDrop}
         >
-          <div ref={exportRef}>
+          <div
+            ref={exportRef}
+            style={{
+              position: "relative",
+              minHeight: "600px",
+              border: "1px solid #ccc",
+              padding: "10px",
+            }}
+          >
             {elements.map((el) => (
-              <div key={el.id} style={{ margin: "10px 0" }}>
-                {el.type === "image" && (
-                  <ImageUpload id={el.id} onImageUpload={handleImageUpload} />
-                )}
-                {el.type === "title" && (
-                  <input
-                    type="text"
-                    placeholder="Enter title"
-                    value={el.content}
-                    onChange={(e) => handleChange(el.id, e.target.value)}
-                  />
-                )}
-                {el.type === "paragraph" && (
-                  <textarea
-                    placeholder="Enter paragraph"
-                    value={el.content}
-                    onChange={(e) => handleChange(el.id, e.target.value)}
-                  />
-                )}
-              </div>
+              <ResizableDraggableItem
+                key={el.id}
+                id={el.id}
+                type={el.type}
+                content={el.content}
+                onChange={handleChange}
+                onImageUpload={handleImageUpload}
+              />
             ))}
           </div>
         </DroppableArea>
