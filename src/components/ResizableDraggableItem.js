@@ -5,9 +5,9 @@ const ResizableDraggableItem = ({
   id,
   type,
   content,
+  position,
   onChange,
   onImageUpload,
-  bounds,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const contentRef = useRef(null);
@@ -53,7 +53,6 @@ const ResizableDraggableItem = ({
         fontWeight: "bold",
         minHeight: "30px",
         outline: "none",
-        // border: isEditing ? "1px solid #ccc" : "none",
         border: "1px solid #ccc",
       };
     }
@@ -64,7 +63,6 @@ const ResizableDraggableItem = ({
         minHeight: "50px",
         minWidth: "200px",
         outline: "none",
-        // border: isEditing ? "1px solid #ccc" : "none",
         border: "1px solid #ccc",
       };
     }
@@ -73,12 +71,11 @@ const ResizableDraggableItem = ({
   return (
     <Rnd
       default={{
-        x: 0,
-        y: 0,
+        x: position.x,
+        y: position.y,
         width: type === "image" ? 320 : "auto",
         height: type === "paragraph" ? 50 : 50,
       }}
-      bounds={bounds?.current || "parent"}
       enableResizing={{
         bottomRight: true,
         bottomLeft: true,

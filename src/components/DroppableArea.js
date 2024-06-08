@@ -5,7 +5,7 @@ import { useDrop } from "react-dnd";
 const DroppableArea = ({ accept, onDrop, children }) => {
   const [, dropRef] = useDrop({
     accept,
-    drop: (item) => onDrop(item),
+    drop: (item, monitor) => onDrop(item, monitor),
   });
 
   return (

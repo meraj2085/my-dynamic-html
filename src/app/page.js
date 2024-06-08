@@ -10,13 +10,20 @@ import { v4 as uuidv4 } from "uuid";
 const Home = () => {
   const [elements, setElements] = useState([]);
   const exportRef = useRef(null);
-  const droppableAreaRef = useRef(null);
 
-  const handleDrop = (item) => {
-    setElements((prevElements) => [
-      ...prevElements,
-      { id: uuidv4(), type: item.type, content: "" },
-    ]);
+  const handleDrop = (item, monitor) => {
+    const dropPosition = monitor.getClientOffset();
+    const dropAreaPosition = exportRef.current.getBoundingClientRect();
+    const newElement = {
+      id: uuidv4(),
+      type: item.type,
+      content: "",
+      position: {
+        x: dropPosition.x - dropAreaPosition.x,
+        y: dropPosition.y - dropAreaPosition.y,
+      },
+    };
+    setElements((prevElements) => [...prevElements, newElement]);
   };
 
   const handleChange = (id, content) => {
@@ -100,7 +107,6 @@ const Home = () => {
         </div>
         <div className="flex-grow p-4">
           <DroppableArea
-            ref={droppableAreaRef}
             accept={["image", "title", "paragraph"]}
             onDrop={handleDrop}
           >
@@ -119,9 +125,9 @@ const Home = () => {
                   id={el.id}
                   type={el.type}
                   content={el.content}
+                  position={el.position}
                   onChange={handleChange}
                   onImageUpload={handleImageUpload}
-                  bounds={droppableAreaRef}
                 />
               ))}
             </div>
