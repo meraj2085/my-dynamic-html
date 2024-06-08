@@ -20,18 +20,3 @@ input {
 textarea {
   height: 100px;
 }
-
-.resizable-draggable-item {
-  padding: 10px;
-  cursor: move;
-  background: #fff;
-}
-
-.resizable-draggable-item img {
-  max-width: 100%;
-  height: auto;
-}
-
-.resizable-draggable-item.editing {
-  border: 2px dashed #ccc;
-}
