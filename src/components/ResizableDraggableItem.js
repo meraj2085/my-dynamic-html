@@ -49,7 +49,7 @@ const ResizableDraggableItem = ({
     if (type === "title") {
       return {
         cursor: "text",
-        padding: "10px",
+        // padding: "10px",
         fontWeight: "bold",
         minHeight: "50px",
         minWidth: "200px",
@@ -60,7 +60,7 @@ const ResizableDraggableItem = ({
     if (type === "paragraph") {
       return {
         cursor: "text",
-        padding: "10px",
+        // padding: "10px",
         minHeight: "50px",
         minWidth: "200px",
         outline: "none",

@@ -13,17 +13,26 @@ const Home = () => {
 
   const handleDrop = (item, monitor) => {
     const dropPosition = monitor.getClientOffset();
-    const dropAreaPosition = exportRef.current.getBoundingClientRect();
-    const newElement = {
-      id: uuidv4(),
-      type: item.type,
-      content: "",
-      position: {
-        x: dropPosition.x - dropAreaPosition.x,
-        y: dropPosition.y - dropAreaPosition.y,
-      },
+    const position = {
+      x: dropPosition.x - 250, // Adjust if needed based on sidebar width
+      y: dropPosition.y - 50, // Adjust if needed based on navbar height or other offset
     };
-    setElements((prevElements) => [...prevElements, newElement]);
+
+    const defaultContent = {
+      image: "",
+      title: "Default Title",
+      paragraph: "Default Paragraph",
+    };
+
+    setElements((prevElements) => [
+      ...prevElements,
+      {
+        id: uuidv4(),
+        type: item.type,
+        content: defaultContent[item.type],
+        position,
+      },
+    ]);
   };
 
   const handleChange = (id, content) => {
@@ -39,7 +48,20 @@ const Home = () => {
   };
 
   const exportHTML = () => {
-    const htmlContent = exportRef.current.innerHTML;
+    const container = exportRef.current;
+    const clonedContainer = container.cloneNode(true);
+    const items = clonedContainer.querySelectorAll(".resizable-draggable-item");
+
+    items.forEach((item) => {
+      const computedStyle = window.getComputedStyle(item);
+      item.style.position = "absolute";
+      item.style.left = computedStyle.left;
+      item.style.top = computedStyle.top;
+      item.style.width = computedStyle.width;
+      item.style.height = computedStyle.height;
+    });
+
+    const htmlContent = clonedContainer.innerHTML;
     const styles = `
       <style>
         body {
