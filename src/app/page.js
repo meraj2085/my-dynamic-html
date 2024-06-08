@@ -1,4 +1,3 @@
-// src/app/page.js
 "use client";
 import React, { useState, useRef } from "react";
 import { DndProvider } from "react-dnd";
@@ -11,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = () => {
   const [elements, setElements] = useState([]);
   const exportRef = useRef(null);
+  const droppableAreaRef = useRef(null);
 
   const handleDrop = (item) => {
     setElements((prevElements) => [
@@ -100,6 +100,7 @@ const Home = () => {
         </div>
         <div className="flex-grow p-4">
           <DroppableArea
+            ref={droppableAreaRef}
             accept={["image", "title", "paragraph"]}
             onDrop={handleDrop}
           >
@@ -120,6 +121,7 @@ const Home = () => {
                   content={el.content}
                   onChange={handleChange}
                   onImageUpload={handleImageUpload}
+                  bounds={droppableAreaRef}
                 />
               ))}
             </div>

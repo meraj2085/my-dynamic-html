@@ -1,4 +1,3 @@
-// components/ResizableDraggableItem.js
 import React, { useState, useEffect, useRef } from "react";
 import { Rnd } from "react-rnd";
 
@@ -8,6 +7,7 @@ const ResizableDraggableItem = ({
   content,
   onChange,
   onImageUpload,
+  bounds,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const contentRef = useRef(null);
@@ -53,7 +53,8 @@ const ResizableDraggableItem = ({
         fontWeight: "bold",
         minHeight: "30px",
         outline: "none",
-        border: isEditing ? "1px solid #ccc" : "none",
+        // border: isEditing ? "1px solid #ccc" : "none",
+        border: "1px solid #ccc",
       };
     }
     if (type === "paragraph") {
@@ -61,8 +62,10 @@ const ResizableDraggableItem = ({
         cursor: "text",
         padding: "10px",
         minHeight: "50px",
+        minWidth: "200px",
         outline: "none",
-        border: isEditing ? "1px solid #ccc" : "none",
+        // border: isEditing ? "1px solid #ccc" : "none",
+        border: "1px solid #ccc",
       };
     }
   };
@@ -73,9 +76,9 @@ const ResizableDraggableItem = ({
         x: 0,
         y: 0,
         width: type === "image" ? 320 : "auto",
-        height: type === "paragraph" ? 200 : 50,
+        height: type === "paragraph" ? 50 : 50,
       }}
-      bounds="parent"
+      bounds={bounds?.current || "parent"}
       enableResizing={{
         bottomRight: true,
         bottomLeft: true,
