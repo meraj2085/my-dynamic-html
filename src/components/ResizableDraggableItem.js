@@ -42,30 +42,64 @@ const ResizableDraggableItem = ({
     }
   };
 
+  const getStyle = () => {
+    if (type === "image") {
+      return { maxWidth: "100%", height: "auto" };
+    }
+    if (type === "title") {
+      return {
+        cursor: "text",
+        padding: "10px",
+        fontWeight: "bold",
+        minHeight: "30px",
+        outline: "none",
+        border: isEditing ? "1px solid #ccc" : "none",
+      };
+    }
+    if (type === "paragraph") {
+      return {
+        cursor: "text",
+        padding: "10px",
+        minHeight: "50px",
+        outline: "none",
+        border: isEditing ? "1px solid #ccc" : "none",
+      };
+    }
+  };
+
   return (
     <Rnd
       default={{
         x: 0,
         y: 0,
-        width: 320,
+        width: type === "image" ? 320 : "auto",
         height: type === "paragraph" ? 200 : 50,
       }}
       bounds="parent"
-      style={{
-        border: "none",
-        padding: "10px",
-        cursor: "move",
-        background: "#fff",
+      enableResizing={{
+        bottomRight: true,
+        bottomLeft: true,
+        topRight: true,
+        topLeft: true,
+        right: true,
+        left: true,
+        bottom: true,
+        top: true,
+      }}
+      style={{ border: "none", cursor: "move", background: "#fff" }}
+      resizeHandleStyles={{
+        bottomRight: {
+          cursor: "nwse-resize",
+          width: "10px",
+          height: "10px",
+          background: "rgba(0, 0, 0, 0.3)",
+        },
       }}
     >
       {type === "image" && (
         <div onClick={triggerFileUpload} style={{ cursor: "pointer" }}>
           {content ? (
-            <img
-              src={content}
-              alt="Uploaded"
-              style={{ maxWidth: "100%", height: "auto" }}
-            />
+            <img src={content} alt="Uploaded" style={getStyle()} />
           ) : (
             <p>Click or drag to upload an image</p>
           )}
@@ -77,37 +111,13 @@ const ResizableDraggableItem = ({
           />
         </div>
       )}
-      {type === "title" && (
+      {(type === "title" || type === "paragraph") && (
         <div
           ref={contentRef}
           contentEditable={isEditing}
           onClick={() => setIsEditing(true)}
           onBlur={handleBlur}
-          style={{
-            cursor: "text",
-            padding: "10px",
-            fontWeight: "bold",
-            minHeight: "30px",
-            outline: "none",
-            border: isEditing ? "1px solid #ccc" : "none",
-          }}
-        >
-          {content}
-        </div>
-      )}
-      {type === "paragraph" && (
-        <div
-          ref={contentRef}
-          contentEditable={isEditing}
-          onClick={() => setIsEditing(true)}
-          onBlur={handleBlur}
-          style={{
-            cursor: "text",
-            padding: "10px",
-            minHeight: "50px",
-            outline: "none",
-            border: isEditing ? "1px solid #ccc" : "none",
-          }}
+          style={getStyle()}
         >
           {content}
         </div>

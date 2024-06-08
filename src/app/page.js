@@ -1,5 +1,5 @@
-"use client";
 // src/app/page.js
+"use client";
 import React, { useState, useRef } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -81,46 +81,50 @@ const Home = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div>
-        <div className="flex justify-between px-4 pt-4">
-          <div className="flex gap-5">
+      <div className="flex">
+        <div
+          className="sidebar p-4 bg-gray-100"
+          style={{ width: "250px", minHeight: "100vh" }}
+        >
+          <div className="flex flex-col gap-5">
             <DraggableItem type="image">📷 Drag Image</DraggableItem>
             <DraggableItem type="title">🖋️ Drag Title</DraggableItem>
             <DraggableItem type="paragraph">📄 Drag Paragraph</DraggableItem>
           </div>
-          <div>
-            <button
-              onClick={exportHTML}
-              className="px-2 py-1 font-semibold rounded-md bg-gray-800 text-gray-100"
-            >
-              📤 Export as HTML
-            </button>
-          </div>
-        </div>
-        <DroppableArea
-          accept={["image", "title", "paragraph"]}
-          onDrop={handleDrop}
-        >
-          <div
-            className="min-h-screen"
-            ref={exportRef}
-            style={{
-              position: "relative",
-              padding: "10px",
-            }}
+          <button
+            onClick={exportHTML}
+            className="px-2 py-1 mt-4 font-semibold rounded-md bg-gray-800 text-gray-100"
           >
-            {elements.map((el) => (
-              <ResizableDraggableItem
-                key={el.id}
-                id={el.id}
-                type={el.type}
-                content={el.content}
-                onChange={handleChange}
-                onImageUpload={handleImageUpload}
-              />
-            ))}
-          </div>
-        </DroppableArea>
+            📤 Export as HTML
+          </button>
+        </div>
+        <div className="flex-grow p-4">
+          <DroppableArea
+            accept={["image", "title", "paragraph"]}
+            onDrop={handleDrop}
+          >
+            <div
+              className="min-h-screen"
+              ref={exportRef}
+              style={{
+                position: "relative",
+                padding: "10px",
+                border: "1px solid #ccc",
+              }}
+            >
+              {elements.map((el) => (
+                <ResizableDraggableItem
+                  key={el.id}
+                  id={el.id}
+                  type={el.type}
+                  content={el.content}
+                  onChange={handleChange}
+                  onImageUpload={handleImageUpload}
+                />
+              ))}
+            </div>
+          </DroppableArea>
+        </div>
       </div>
     </DndProvider>
   );
