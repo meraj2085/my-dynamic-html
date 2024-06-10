@@ -20,3 +20,39 @@ input {
 textarea {
   height: 100px;
 }
+
+.styled-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.styled-button:hover {
+  background-color: #0056b3;
+}
+
+.social-icon {
+  margin: 0 5px;
+  text-decoration: none;
+  color: #000;
+}
+
+.social-icon i {
+  font-size: 20px;
+}
+
+.socialShare {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.hrTag {
+  border: 1px solid red;
+  min-width: 200px;
+}

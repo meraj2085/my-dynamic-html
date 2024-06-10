@@ -47,26 +47,27 @@ const ResizableDraggableItem = ({
     if (type === "image") {
       return { maxWidth: "100%", height: "auto" };
     }
-    if (type === "title") {
+    if (type === "text") {
       return {
         cursor: "text",
-        // padding: "10px",
-        fontWeight: "bold",
+        fontWeight: "normal",
         minHeight: "50px",
         minWidth: "200px",
         outline: "none",
         border: "1px solid #ccc",
       };
     }
-    if (type === "paragraph") {
-      return {
-        cursor: "text",
-        // padding: "10px",
-        minHeight: "50px",
-        minWidth: "200px",
-        outline: "none",
-        border: "1px solid #ccc",
-      };
+    if (type === "divider") {
+      return { width: "100%" };
+    }
+    if (type === "space") {
+      return { width: "100%", height: "20px" };
+    }
+    if (type === "button") {
+      return { cursor: "pointer" };
+    }
+    if (type === "socialShare" || type === "socialFollow") {
+      return { cursor: "pointer", display: "flex", gap: "10px" };
     }
   };
 
@@ -76,7 +77,7 @@ const ResizableDraggableItem = ({
         x: position.x,
         y: position.y,
         width: type === "image" ? 320 : "auto",
-        height: type === "paragraph" ? 50 : 50,
+        height: type === "text" ? 50 : 50,
       }}
       enableResizing={{
         bottomRight: true,
@@ -113,7 +114,12 @@ const ResizableDraggableItem = ({
           />
         </div>
       )}
-      {(type === "title" || type === "paragraph") && (
+      {(type === "text" ||
+        type === "divider" ||
+        type === "space" ||
+        type === "button" ||
+        type === "socialShare" ||
+        type === "socialFollow") && (
         <div
           ref={contentRef}
           contentEditable={isEditing}
@@ -121,7 +127,11 @@ const ResizableDraggableItem = ({
           onBlur={handleBlur}
           style={getStyle()}
         >
-          {content}
+          {type === "divider" || type === "space" ? (
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
+          ) : (
+            content
+          )}
         </div>
       )}
     </Rnd>
