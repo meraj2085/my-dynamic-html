@@ -1,3 +1,4 @@
+// components/ResizableDraggableItem.js
 import React, { useState, useEffect, useRef } from "react";
 import { Rnd } from "react-rnd";
 
