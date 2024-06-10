@@ -35,7 +35,7 @@ const ResizableDraggableItem = ({
       return {
         cursor: "text",
         fontWeight: "normal",
-        minHeight: "50px",
+        minHeight: "20px",
         minWidth: "200px",
         outline: "none",
         border: "1px solid #ccc",
