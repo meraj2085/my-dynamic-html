@@ -10,7 +10,7 @@ const DraggableItem = ({ type, children }) => {
 
   return (
     <div
-      className="px-2 py-1 font-semibold rounded-md bg-gray-800 text-gray-100"
+      className="px-2 py-1 font-semibold rounded-md text-gray-800 border border-gray-800"
       ref={dragRef}
       style={{ cursor: "move" }}
     >
