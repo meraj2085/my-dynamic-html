@@ -6,9 +6,14 @@ import DraggableItem from "../components/DraggableItem";
 import DroppableArea from "../components/DroppableArea";
 import ResizableDraggableItem from "../components/ResizableDraggableItem";
 import { v4 as uuidv4 } from "uuid";
+import TabItems from "@/components/tab/tabItems";
+import BuildTabs from "@/components/tab/buildTabs";
+import ImagesTabs from "@/components/tab/imagesTabs";
+import StylesTabs from "@/components/tab/stylesTabs";
 
 const Home = () => {
   const [elements, setElements] = useState([]);
+  const [activeTab, setActiveTab] = useState("build"); // ["build", "images", "styles"
   const exportRef = useRef(null);
 
   const handleDrop = (item, monitor) => {
@@ -151,25 +156,12 @@ const Home = () => {
           className="sidebar p-4 bg-gray-100"
           style={{ width: "250px", minHeight: "100vh" }}
         >
-          <div className="flex flex-col gap-5">
-            <DraggableItem type="image">📷 Drag Image</DraggableItem>
-            <DraggableItem type="text">📝 Drag Text</DraggableItem>
-            <DraggableItem type="divider">─ Drag Divider</DraggableItem>
-            <DraggableItem type="space">⬜ Drag Space</DraggableItem>
-            <DraggableItem type="button">🔘 Drag Button</DraggableItem>
-            <DraggableItem type="socialShare">
-              🔗 Drag Social Share
-            </DraggableItem>
-            <DraggableItem type="socialFollow">
-              👥 Drag Social Follow
-            </DraggableItem>
+          <TabItems setActiveTab={setActiveTab} activeTab={activeTab} />
+          <div className="mt-10">
+            {activeTab === "build" && <BuildTabs exportHTML={exportHTML} />}
+            {activeTab === "images" && <ImagesTabs exportHTML={exportHTML} />}
+            {activeTab === "styles" && <StylesTabs exportHTML={exportHTML} />}
           </div>
-          <button
-            onClick={exportHTML}
-            className="px-2 py-1 mt-4 font-semibold rounded-md bg-gray-800 text-gray-100"
-          >
-            📤 Export as HTML
-          </button>
         </div>
         <div className="flex-grow p-4">
           <DroppableArea
