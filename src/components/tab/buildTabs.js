@@ -5,7 +5,6 @@ const BuildTabs = ({ exportHTML }) => {
   return (
     <>
       <div className="flex flex-col gap-5">
-        <DraggableItem type="image">📷 Drag Image</DraggableItem>
         <DraggableItem type="text">📝 Drag Text</DraggableItem>
         <DraggableItem type="divider">─ Drag Divider</DraggableItem>
         <DraggableItem type="space">⬜ Drag Space</DraggableItem>

@@ -24,7 +24,6 @@ const Home = () => {
     };
 
     const defaultContent = {
-      image: "",
       text: "Default Text",
       divider: "<hr class='hrTag'>",
       space: "<div style='height:20px;'></div>",
@@ -59,12 +58,6 @@ const Home = () => {
   const handleChange = (id, content) => {
     setElements((prevElements) =>
       prevElements.map((el) => (el.id === id ? { ...el, content } : el))
-    );
-  };
-
-  const handleImageUpload = (id, image) => {
-    setElements((prevElements) =>
-      prevElements.map((el) => (el.id === id ? { ...el, content: image } : el))
     );
   };
 
@@ -166,7 +159,6 @@ const Home = () => {
         <div className="flex-grow p-4">
           <DroppableArea
             accept={[
-              "image",
               "text",
               "divider",
               "space",
@@ -193,7 +185,6 @@ const Home = () => {
                   content={el.content}
                   position={el.position}
                   onChange={handleChange}
-                  onImageUpload={handleImageUpload}
                 />
               ))}
             </div>

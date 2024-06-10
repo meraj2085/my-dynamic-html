@@ -19,19 +19,6 @@ const ResizableDraggableItem = ({
     }
   }, [content]);
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      onImageUpload(id, reader.result);
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
   const triggerFileUpload = () => {
     document.getElementById(`file-input-${id}`).click();
   };
@@ -44,9 +31,6 @@ const ResizableDraggableItem = ({
   };
 
   const getStyle = () => {
-    if (type === "image") {
-      return { maxWidth: "100%", height: "auto" };
-    }
     if (type === "text") {
       return {
         cursor: "text",
@@ -76,7 +60,6 @@ const ResizableDraggableItem = ({
       default={{
         x: position.x,
         y: position.y,
-        width: type === "image" ? 320 : "auto",
         height: type === "text" ? 50 : 50,
       }}
       enableResizing={{
@@ -99,21 +82,6 @@ const ResizableDraggableItem = ({
         },
       }}
     >
-      {type === "image" && (
-        <div onClick={triggerFileUpload} style={{ cursor: "pointer" }}>
-          {content ? (
-            <img src={content} alt="Uploaded" style={getStyle()} />
-          ) : (
-            <p>Click or drag to upload an image</p>
-          )}
-          <input
-            type="file"
-            id={`file-input-${id}`}
-            style={{ display: "none" }}
-            onChange={handleImageUpload}
-          />
-        </div>
-      )}
       {(type === "text" ||
         type === "divider" ||
         type === "space" ||
