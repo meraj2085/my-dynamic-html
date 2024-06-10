@@ -41,6 +41,9 @@ const ResizableDraggableItem = ({
         border: "1px solid #ccc",
       };
     }
+    if (type === "image") {
+      return { width: "100%" };
+    }
     if (type === "divider") {
       return { width: "100%" };
     }
@@ -61,6 +64,7 @@ const ResizableDraggableItem = ({
         x: position.x,
         y: position.y,
         height: type === "text" ? 50 : 50,
+        width: type === "image" ? 300 : 200,
       }}
       enableResizing={{
         bottomRight: true,
@@ -83,6 +87,7 @@ const ResizableDraggableItem = ({
       }}
     >
       {(type === "text" ||
+        type === "image" ||
         type === "divider" ||
         type === "space" ||
         type === "button" ||

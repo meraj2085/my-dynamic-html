@@ -1,4 +1,7 @@
-const ImagesTabs = ({ exportHTML }) => {
+import DraggableItem from "../DraggableItem";
+import Image from "next/image";
+
+const ImagesTabs = ({ exportHTML, setImageURL }) => {
   const imageUrls = [
     "https://i.ibb.co/bsBZ51J/4cbcbdfd9463c78c01ec1d23c63c0975.jpg",
     "https://i.ibb.co/Q9zcF1r/7f2d395de151a271ed3e90833f62abfe.jpg",
@@ -10,7 +13,16 @@ const ImagesTabs = ({ exportHTML }) => {
     <>
       <div className="grid grid-cols-2 gap-2">
         {imageUrls.map((url, index) => (
-          <img className="cursor-grab" key={index} src={url} alt="Image" />
+          <DraggableItem type="image" key={index}>
+            <Image
+              onDrag={() => setImageURL(url)}
+              className="cursor-grab"
+              src={url}
+              alt="Image"
+              width={300}
+              height={200}
+            />
+          </DraggableItem>
         ))}
       </div>
       <div className="flex justify-center">

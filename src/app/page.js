@@ -13,18 +13,20 @@ import StylesTabs from "@/components/tab/stylesTabs";
 
 const Home = () => {
   const [elements, setElements] = useState([]);
-  const [activeTab, setActiveTab] = useState("build"); // ["build", "images", "styles"
+  const [activeTab, setActiveTab] = useState("build");
+  const [imageURL, setImageURL] = useState("");
   const exportRef = useRef(null);
 
   const handleDrop = (item, monitor) => {
     const dropPosition = monitor.getClientOffset();
     const position = {
-      x: dropPosition.x - 250, // Adjust if needed based on sidebar width
-      y: dropPosition.y - 50, // Adjust if needed based on navbar height or other offset
+      x: dropPosition.x - 250,
+      y: dropPosition.y - 50,
     };
 
     const defaultContent = {
       text: "Default Text",
+      image: `<img src=${imageURL} alt='placeholder' />`,
       divider: "<hr class='hrTag'>",
       space: "<div style='height:20px;'></div>",
       button: "<button class='styled-button'>Button</button>",
@@ -152,7 +154,9 @@ const Home = () => {
           <TabItems setActiveTab={setActiveTab} activeTab={activeTab} />
           <div className="mt-10">
             {activeTab === "build" && <BuildTabs exportHTML={exportHTML} />}
-            {activeTab === "images" && <ImagesTabs exportHTML={exportHTML} />}
+            {activeTab === "images" && (
+              <ImagesTabs setImageURL={setImageURL} exportHTML={exportHTML} />
+            )}
             {activeTab === "styles" && <StylesTabs exportHTML={exportHTML} />}
           </div>
         </div>
@@ -160,6 +164,7 @@ const Home = () => {
           <DroppableArea
             accept={[
               "text",
+              "image",
               "divider",
               "space",
               "button",
